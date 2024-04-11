@@ -55,7 +55,6 @@ export class AuthService {
     } catch (error) {
       console.log("getCurrentUser :: Auth.js :: ", error);
     }
-
     return null;
   }
 }
