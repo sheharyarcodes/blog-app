@@ -7,19 +7,23 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
+  const fetchUserData = async () => {
+    try {
+      const userData = await authService.getCurrentUser();
+      if (userData) {
+        dispatch(userLogin({ userData }));
+      } else {
+        dispatch(userLogout());
+      }
+    } catch (error) {
+      console.log("fetchUserData :: App.jsx :: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    authService
-      .getCurrentUser()
-      .then((userData) => {
-        if (userData) {
-          dispatch(userLogin({ userData }));
-        } else {
-          dispatch(userLogout());
-        }
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    fetchUserData();
   }, []);
 
   return !loading ? <p>App</p> : <p>loading...</p>;
