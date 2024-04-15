@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import authService from "./appwrite/auth";
 import { userLogin, userLogout } from "./features/auth/authSlice";
+import { Container, Footer, Header } from "./components";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -26,7 +27,21 @@ const App = () => {
     fetchUserData();
   }, []);
 
-  return !loading ? <p>App</p> : <p>loading...</p>;
+  return !loading ? (
+    <div className="min-h-screen ">
+      <Header />
+      <hr className="border-black" />
+
+      <div className="h-screen"></div>
+
+      <hr className="border-black" />
+      <Footer />
+    </div>
+  ) : (
+    <div className="flex min-h-screen items-center justify-center">
+      <p className="text-3xl font-bold">loading...</p>
+    </div>
+  );
 };
 
 export default App;
