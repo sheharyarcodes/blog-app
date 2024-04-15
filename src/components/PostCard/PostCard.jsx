@@ -1,6 +1,11 @@
 import React from "react";
 import appwriteService from "@/appwrite/appwriteConfig";
-import { Card } from "../ui/card";
+import {
+  CardTitle,
+  CardDescription,
+  CardContent,
+  Card,
+} from "@/components/ui/card";
 import { Link } from "react-router-dom";
 
 const PostCard = ({ $id, title, content, featuredImage, category }) => {
@@ -8,10 +13,12 @@ const PostCard = ({ $id, title, content, featuredImage, category }) => {
   return (
     <Link to={`/post/${$id}`}>
       <Card className="">
-        <img className="" src={getFilePreview(featuredImage)} alt={title} />
-        <h2 className="">{title}</h2>
-        <h3 className="">{category}</h3>
-        <p className="">{content}</p>
+        <CardContent>
+          <img className="" src={getFilePreview(featuredImage)} alt={title} />
+          <CardTitle className="">{title}</CardTitle>
+          <h2 className="">{category}</h2>
+          <CardDescription className="">{content}</CardDescription>
+        </CardContent>
       </Card>
       ;
     </Link>

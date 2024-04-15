@@ -2,7 +2,7 @@ import React, { useId, forwardRef } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
-const Input = forwardRef(function Input(
+const InputComponent = forwardRef(function InputComponent(
   { type = "text", className = "", label = "label", ...props },
   ref
 ) {
@@ -16,4 +16,4 @@ const Input = forwardRef(function Input(
   );
 });
 
-export default Input;
+export default InputComponent;

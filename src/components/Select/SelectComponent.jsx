@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 
-const Select = (
+const SelectComponent = forwardRef(function SelectComponent(
   {
     options,
     label = "label",
@@ -19,7 +19,7 @@ const Select = (
     ...props
   },
   ref
-) => {
+) {
   const id = useId();
 
   return (
@@ -43,6 +43,6 @@ const Select = (
       </Select>
     </div>
   );
-};
+});
 
-export default forwardRef(Select);
+export default SelectComponent;
