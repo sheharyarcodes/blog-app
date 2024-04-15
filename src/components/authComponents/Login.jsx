@@ -11,7 +11,7 @@ import {
 import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import authService from "@/appwrite/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { InputComponent } from "..";
 
 const Login = () => {

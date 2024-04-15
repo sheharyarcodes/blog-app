@@ -26,7 +26,7 @@ const Navigation = () => {
     },
     {
       name: "All Posts",
-      slug: "/all-posts",
+      slug: "/posts/all",
       isActive: true,
       id: uuid(),
     },
@@ -38,7 +38,7 @@ const Navigation = () => {
     },
     {
       name: "Add Post",
-      slug: "/add-post",
+      slug: "/post/add",
       isActive: authStatus,
       id: uuid(),
     },

@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import authService from "./appwrite/auth";
 import { userLogin, userLogout } from "./features/auth/authSlice";
 import { Container, Footer, Header } from "./components";
+import Layout from "./utils/Layout";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -32,7 +33,7 @@ const App = () => {
       <Header />
       <hr className="border-black" />
 
-      <div className="h-screen"></div>
+      <Layout />
 
       <hr className="border-black" />
       <Footer />

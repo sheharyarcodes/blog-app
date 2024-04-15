@@ -80,6 +80,18 @@ export class AppwriteService {
     }
   }
 
+  async getAllPosts() {
+    try {
+      return await this.databases.listDocuments(
+        config.appwriteDatabaseId,
+        config.appwriteCollectionId
+      );
+    } catch (error) {
+      console.log("getAllPost :: appwriteConfig.js :: ", error);
+      return false;
+    }
+  }
+
   // file upload services
 
   async uploadFile(fileBlob) {
