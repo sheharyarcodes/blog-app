@@ -11,20 +11,14 @@ import {
 import { Label } from "@/components/ui/label";
 
 const SelectComponent = forwardRef(function SelectComponent(
-  {
-    options,
-    label = "label",
-    className,
-    placeholder = "Select an option",
-    ...props
-  },
+  { options, label, className, placeholder = "Select an option", ...props },
   ref
 ) {
   const id = useId();
 
   return (
     <div>
-      <Label htmlFor={id}>{label}</Label>
+      {label && <Label htmlFor={id}>{label}</Label>}
 
       <Select id={id} ref={ref} {...props}>
         <SelectTrigger className="w-[180px]">
@@ -32,7 +26,7 @@ const SelectComponent = forwardRef(function SelectComponent(
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>{label}</SelectLabel>
+            {label && <SelectLabel>{label}</SelectLabel>}
             {options?.map((item) => (
               <SelectItem key={item} value={item}>
                 {item}

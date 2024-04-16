@@ -6,19 +6,21 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import appwriteService from "@/appwrite/appwriteConfig";
 import { Textarea } from "../ui/textarea";
+import { Label } from "../ui/label";
 import { v4 as uuid } from "uuid";
 
 const PostForm = ({ post }) => {
   const userData = useSelector((state) => state.auth.userData);
   const navigate = useNavigate();
-  const { register, handleSubmit, watch, setValue } = useForm({
-    defaultValues: {
-      title: post?.title || "",
-      content: post?.content || "",
-      slug: post?.slug || "",
-      category: post?.category || "",
-    },
-  });
+  const { register, handleSubmit, watch, setValue, control, getValues } =
+    useForm({
+      defaultValues: {
+        title: post?.title || "",
+        content: post?.content || "",
+        slug: post?.$id || "",
+        category: post?.category || "",
+      },
+    });
 
   const options = [
     "Lifestyle",
@@ -32,14 +34,17 @@ const PostForm = ({ post }) => {
   const handlePost = async (data) => {
     try {
       if (post) {
-        const imageFile = data.image[0] ? appwriteService.uploadFile : null;
+        const imageFile = data.image[0]
+          ? await appwriteService.uploadFile(data.image[0])
+          : null;
+
         if (imageFile) {
           appwriteService.deleteFile(post.featuredImage);
         }
 
         const databasePost = await appwriteService.updatePost(post.$id, {
           ...data,
-          featuredImage: imageFile ? imageFile : undefined,
+          featuredImage: imageFile ? imageFile.$id : undefined,
         });
 
         if (databasePost) {
@@ -48,7 +53,7 @@ const PostForm = ({ post }) => {
       } else {
         const imageFile = await appwriteService.uploadFile(data.image[0]);
 
-        if (file) {
+        if (imageFile) {
           const fileId = file.$id;
           data.featuredImage = fileId;
 
@@ -63,7 +68,7 @@ const PostForm = ({ post }) => {
         }
       }
     } catch (error) {
-      console.log(error);
+      console.log("postForm component:" + error);
     }
   };
 
@@ -87,9 +92,7 @@ const PostForm = ({ post }) => {
       }
     });
 
-    return () => {
-      subscription.unsubscribe();
-    };
+    return () => subscription.unsubscribe();
   }, [watch, slugTransform, setValue]);
 
   return (
@@ -104,8 +107,23 @@ const PostForm = ({ post }) => {
         })}
       />
 
+      <InputComponent
+        placeholder="Slug"
+        label="Slug:"
+        type="text"
+        className=""
+        {...register("slug", {
+          required: true,
+        })}
+        onInput={(e) => {
+          setValue("slug", slugTransform(e.currentTarget.value), {
+            shouldValidate: true,
+          });
+        }}
+      />
+
       <div>
-        <label>Content:</label>
+        <Label>Content:</Label>
         <Textarea />
       </div>
 
@@ -137,7 +155,7 @@ const PostForm = ({ post }) => {
         {...register("category", { required: true })}
       />
 
-      <Button type="submit" bgColor={post && "bg-green-500"} className="w-full">
+      <Button type="submit" className={`w-full ${post && "bg-green-500"}`}>
         {post ? "Update" : "Submit"}
       </Button>
     </form>
