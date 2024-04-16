@@ -16,7 +16,7 @@ const AllPosts = () => {
   return (
     <Container>
       <div>
-        {posts.map((item) => {
+        {posts?.map((item) => {
           <div key={item.$id}>
             <PostCard {...item} />
           </div>;

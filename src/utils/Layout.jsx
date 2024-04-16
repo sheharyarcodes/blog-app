@@ -17,13 +17,36 @@ const Layout = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/post/:slug" element={<PostDetails />} />
-        <Route path="/post/edit" element={<EditPost />} />
-        <Route path="/post/add" element={<AddPost />} />
         <Route path="/posts/all" element={<AllPosts />} />
+        {/* <Route
+          path="/posts/:userId"
+          element={
+            <ProtectedRoute authentication>
+              myPosts page
+            </ProtectedRoute>
+          }
+        /> */}
+        {/* <Route path="/search/:query" element={ search Page } /> */}
+        <Route
+          path="/post/edit"
+          element={
+            <ProtectedRoute authentication>
+              <EditPost />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/post/add"
+          element={
+            <ProtectedRoute authentication>
+              <AddPost />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/login"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute authentication={false}>
               <Login />
             </ProtectedRoute>
           }
@@ -31,7 +54,7 @@ const Layout = () => {
         <Route
           path="/signup"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute authentication={false}>
               <SignUp />
             </ProtectedRoute>
           }

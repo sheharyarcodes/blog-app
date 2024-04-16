@@ -4,42 +4,39 @@ import {
   NavigationMenuList,
   NavigationMenu,
 } from "@/components/ui/navigation-menu";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import ButtonsContainer from "./ButtonsContainer";
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
-import authSlice from "@/features/auth/authSlice";
 import { v4 as uuid } from "uuid";
 
 const Navigation = () => {
   const authStatus = useSelector((state) => state.auth.status);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const navItems = [
     {
       name: "Home",
       slug: "/",
-      isActive: true,
+      show: true,
       id: uuid(),
     },
     {
       name: "All Posts",
       slug: "/posts/all",
-      isActive: true,
+      show: true,
       id: uuid(),
     },
     {
       name: "My Posts",
       slug: "/",
-      isActive: authStatus,
+      show: authStatus,
       id: uuid(),
     },
     {
       name: "Add Post",
       slug: "/post/add",
-      isActive: authStatus,
+      show: authStatus,
       id: uuid(),
     },
   ];
@@ -51,16 +48,21 @@ const Navigation = () => {
         <NavigationMenuList className="flex md:mx-10 lg:mx-20 xl:mx-40 gap-2">
           {navItems.map((item) => (
             <NavigationMenuLink key={item.id} asChild>
-              <Link
-                className={`rounded bg-transparent px-2 py-1 text-sm font-medium transition-colors whitespace-nowrap ${
-                  item.isActive
+              <NavLink
+                className={`
+                rounded px-2 py-1 text-sm font-medium transition-colors whitespace-nowrap
+                ${
+                  item.show
                     ? "hover:bg-gray-100 hover:text-gray-900"
                     : "hover:bg-red-100 cursor-not-allowed opacity-20"
-                }`}
-                to={item.isActive && item.slug}
+                }
+                ${({ isActive }) =>
+                  isActive ? "bg-gray-100 text-gray-900" : "bg-transparent"}
+              `}
+                to={item.show && item.slug}
               >
                 {item.name}
-              </Link>
+              </NavLink>
             </NavigationMenuLink>
           ))}
         </NavigationMenuList>
@@ -78,15 +80,22 @@ const Navigation = () => {
         <SheetContent className="flex flex-col justify-between" side="right">
           <div className="grid gap-2 py-6">
             {navItems.map((item) => (
-              <Link
+              <NavLink
                 key={item.id}
-                className={`flex w-full items-center py-2 text-lg font-semibold ${
-                  !item.isActive && "opacity-20"
-                }`}
-                to={item.isActive && item.slug}
+                className={`
+                rounded px-2 py-1 text-sm font-medium transition-colors whitespace-nowrap
+                ${
+                  item.show
+                    ? "hover:bg-gray-100 hover:text-gray-900"
+                    : "hover:bg-red-100 cursor-not-allowed opacity-20"
+                }
+                ${({ isActive }) =>
+                  isActive ? "bg-gray-100 text-gray-900" : "bg-transparent"}
+              `}
+                to={item.show && item.slug}
               >
                 {item.name}
-              </Link>
+              </NavLink>
             ))}
           </div>
           <ButtonsContainer />

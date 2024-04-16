@@ -9,7 +9,7 @@ const InputComponent = forwardRef(function InputComponent(
   const id = useId();
 
   return (
-    <div className={`flex items-center gap-1 ${className}`}>
+    <div className={`flex flex-col gap-2 ${className}`}>
       <Label htmlFor={id}>{label}</Label>
       <Input id={id} ref={ref} type={type} {...props} />
     </div>

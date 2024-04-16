@@ -15,7 +15,7 @@ const Home = () => {
 
   return (
     <Container>
-      {posts.map((item) => {
+      {posts?.map((item) => {
         <div key={item.$id}>
           <PostCard {...item} />
         </div>;

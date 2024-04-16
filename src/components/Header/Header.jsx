@@ -11,7 +11,6 @@ const Header = () => {
           <Input type="text" placeholder="Search by title..." />
           <Button type="submit">Search</Button>
         </form>
-
         <Navigation />
       </header>
     </Container>

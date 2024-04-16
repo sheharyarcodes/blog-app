@@ -68,12 +68,11 @@ export class AppwriteService {
 
   async getPost(slug) {
     try {
-      await this.databases.getDocument(
+      return await this.databases.getDocument(
         config.appwriteDatabaseId,
         config.appwriteCollectionId,
         slug
       );
-      return true;
     } catch (error) {
       console.log("getPost :: appwriteConfig.js :: ", error);
       return false;
@@ -96,12 +95,11 @@ export class AppwriteService {
 
   async uploadFile(fileBlob) {
     try {
-      await this.bucket.createFile(
+      return await this.bucket.createFile(
         config.appwriteBucketId,
         ID.unique(),
         fileBlob
       );
-      return true;
     } catch (error) {
       console.log("uploadFile :: appwriteConfig.js :: ", error);
       return false;

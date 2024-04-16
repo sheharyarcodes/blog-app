@@ -29,7 +29,7 @@ export class AuthService {
         return userAccount;
       }
     } catch (error) {
-      console.log("createAccount :: Auth.js :: ", error);
+      console.log("createAccount :: Auth.js ::", error);
     }
   }
 
@@ -37,15 +37,15 @@ export class AuthService {
     try {
       return await this.account.createEmailSession(email, password);
     } catch (error) {
-      console.log("login :: Auth.js :: ", error);
+      console.log("login :: Auth.js ::", error);
     }
   }
 
   async logout() {
     try {
-      return this.account.deleteSessions();
+      return await this.account.deleteSessions();
     } catch (error) {
-      console.log("logout :: Auth.js :: ", error);
+      console.log("logout :: Auth.js ::", error);
     }
   }
 
@@ -53,7 +53,7 @@ export class AuthService {
     try {
       return await this.account.get();
     } catch (error) {
-      console.log("getCurrentUser :: Auth.js :: ", error);
+      console.log("getCurrentUser :: Auth.js ::", error);
     }
     return null;
   }

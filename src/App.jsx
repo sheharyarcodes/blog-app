@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import authService from "./appwrite/auth";
 import { userLogin, userLogout } from "./features/auth/authSlice";
-import { Container, Footer, Header } from "./components";
+import { Footer, Header } from "./components";
 import Layout from "./utils/Layout";
 
 const App = () => {
@@ -32,9 +32,9 @@ const App = () => {
     <div className="min-h-screen ">
       <Header />
       <hr className="border-black" />
-
-      <Layout />
-
+      <main>
+        <Layout />
+      </main>
       <hr className="border-black" />
       <Footer />
     </div>

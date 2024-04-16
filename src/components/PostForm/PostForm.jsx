@@ -20,6 +20,15 @@ const PostForm = ({ post }) => {
     },
   });
 
+  const options = [
+    "Lifestyle",
+    "Science",
+    "Education",
+    "Finance",
+    "Health & Fitness",
+    "Personal Development",
+  ];
+
   const handlePost = async (data) => {
     try {
       if (post) {
@@ -96,7 +105,7 @@ const PostForm = ({ post }) => {
       />
 
       <div>
-        <label></label>
+        <label>Content:</label>
         <Textarea />
       </div>
 
