@@ -19,14 +19,6 @@ const Layout = () => {
         <Route path="/" element={<Home />} />
         <Route path="/post/:slug" element={<PostDetails />} />
         <Route path="/posts/all" element={<AllPosts />} />
-        {/* <Route
-          path="/posts/:userId"
-          element={
-            <ProtectedRoute authentication>
-              myPosts page
-            </ProtectedRoute>
-          }
-        /> */}
         <Route path="/search/:searchQuery" element={<SearchResults />} />
         <Route
           path="/edit-post/:slug"
