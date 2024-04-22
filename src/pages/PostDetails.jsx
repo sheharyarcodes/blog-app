@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import appwriteService from "../appwrite/appwriteConfig";
 import { Container } from "../components";
 import { useSelector } from "react-redux";
+import { Button } from "@/components/ui/button";
 
 const PostDetails = () => {
   const [post, setPost] = useState(null);
@@ -31,27 +32,31 @@ const PostDetails = () => {
   };
 
   return post ? (
-    <Container>
-      <div className=" relative">
-        <img src="" alt="" />
+    <Container className="py-10 md:px-30 lg:px-40 flex flex-col gap-2">
+      <div className=" overflow-hidden rounded-sm w-full border-b-2 border-black relative">
+        <img
+          className="w-full h-full object-cover"
+          src={appwriteService.getFilePreview(post.featuredImage)}
+          alt=""
+        />
 
         {isAuthor && (
-          <div className="absolute right-6 top-6">
+          <div className="absolute right-2 bottom-2 flex gap-2">
             <Link to={`/edit-post/${post.$id}`}>
-              <Button bgColor="bg-green-500" className="mr-3">
-                Edit
-              </Button>
+              <Button size="sm">Edit</Button>
             </Link>
-            <Button bgColor="bg-red-500" onClick={deletePost}>
+            <Button size="sm" variant="destructive" onClick={deletePost}>
               Delete
             </Button>
           </div>
         )}
       </div>
 
-      <h1 className="">{post.title}</h1>
+      <h2 className="bg-gray-950 text-white w-fit px-2 py-1 rounded">
+        {post.category}
+      </h2>
 
-      <h2 className="">{post.category}</h2>
+      <h1 className="text-3xl font-bold">{post.title}</h1>
 
       <p className="">{post.content}</p>
     </Container>

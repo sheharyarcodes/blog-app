@@ -5,8 +5,7 @@ import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import appwriteService from "@/appwrite/appwriteConfig";
-import { Textarea } from "../ui/textarea";
-import { Label } from "../ui/label";
+import TextareaComponent from "../Textarea/TextareaComponent";
 import { v4 as uuid } from "uuid";
 
 const PostForm = ({ post }) => {
@@ -54,7 +53,7 @@ const PostForm = ({ post }) => {
         const imageFile = await appwriteService.uploadFile(data.image[0]);
 
         if (imageFile) {
-          const fileId = file.$id;
+          const fileId = imageFile.$id;
           data.featuredImage = fileId;
 
           const newPost = await appwriteService.createPost({
@@ -74,12 +73,7 @@ const PostForm = ({ post }) => {
 
   const slugTransform = useCallback((value) => {
     if (value && typeof value === "string") {
-      return (
-        value
-          .trim()
-          .toLocaleLowerCase()
-          .replace(/^[a-zA-Z\d]+/g, "") + uuid()
-      );
+      return value.trim().toLowerCase().replace(/ /g, "-");
     } else {
       return "";
     }
@@ -96,7 +90,20 @@ const PostForm = ({ post }) => {
   }, [watch, slugTransform, setValue]);
 
   return (
-    <form onSubmit={handleSubmit(handlePost)} className="">
+    <form
+      onSubmit={handleSubmit(handlePost)}
+      className="max-w-2xl flex flex-col mx-auto py-20 gap-4"
+    >
+      {post && (
+        <div className="w-full mb-4">
+          <img
+            src={appwriteService.getFilePreview(post.featuredImage)}
+            alt={post.title}
+            className="rounded-lg w-full"
+          />
+        </div>
+      )}
+
       <InputComponent
         placeholder="Title"
         label="Title:"
@@ -122,38 +129,27 @@ const PostForm = ({ post }) => {
         }}
       />
 
-      <div>
-        <Label>Content:</Label>
-        <Textarea />
+      <TextareaComponent
+        label="Content:"
+        {...register("content", { required: true })}
+      />
+
+      <div className="flex justify-between">
+        <InputComponent
+          placeholder="Choose an image"
+          label="Featured Image:"
+          type="file"
+          accept="image/png, image/jpg, image/jpeg, image/gif"
+          {...register("image", { required: !post })}
+        />
+
+        <SelectComponent
+          options={options}
+          label="Category"
+          placeholder="Select a category"
+          {...register("category", { required: true })}
+        />
       </div>
-
-      {post && (
-        <div className="w-full mb-4">
-          <img
-            src={appwriteService.getFilePreview(post.featuredImage)}
-            alt={post.title}
-            className="rounded-lg"
-          />
-        </div>
-      )}
-
-      <InputComponent
-        placeholder="Choose an image"
-        label="Featured Image:"
-        type="file"
-        className=""
-        accept="image/png, image/jpg, image/jpeg, image/gif"
-        {...register("image", { required: !post })}
-      />
-      {/* error: there might be a featuredImage instead of image */}
-
-      <SelectComponent
-        options={options}
-        label="Category:"
-        placeholder="Select a category"
-        className=""
-        {...register("category", { required: true })}
-      />
 
       <Button type="submit" className={`w-full ${post && "bg-green-500"}`}>
         {post ? "Update" : "Submit"}

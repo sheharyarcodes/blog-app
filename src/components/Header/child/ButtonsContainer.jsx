@@ -16,29 +16,23 @@ const ButtonsContainer = () => {
     });
   };
 
-  // return !authStatus ? (
-  //   <div className="flex items-center gap-2">
-  //     <Button onClick={() => navigate("/login")} variant="outline">
-  //       Log in
-  //     </Button>
-  //     <Button onClick={() => navigate("/signup")}>Sign Up</Button>
-  //   </div>
-  // ) : (
-  //   <Button onClick={logoutHandler} variant="destructive">
-  //     Logout
-  //   </Button>
-  // );
-  return (
+  return !authStatus ? (
     <div className="flex items-center gap-2">
-      <Button onClick={() => navigate("/login")} variant="outline">
+      <Button
+        className="w-1/2"
+        onClick={() => navigate("/login")}
+        variant="outline"
+      >
         Log in
       </Button>
-      <Button onClick={() => navigate("/signup")}>Sign Up</Button>
-
-      <Button onClick={logoutHandler} variant="destructive">
-        Logout
+      <Button className="w-1/2" onClick={() => navigate("/signup")}>
+        Sign Up
       </Button>
     </div>
+  ) : (
+    <Button className="w-full" onClick={logoutHandler} variant="destructive">
+      Logout
+    </Button>
   );
 };
 

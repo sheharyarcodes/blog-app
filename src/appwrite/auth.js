@@ -3,14 +3,14 @@ import { Client, Account, ID } from "appwrite";
 
 export class AuthService {
   client = new Client();
-  account = new Account(this.client);
+  account;
 
   constructor() {
     this.client
       .setEndpoint(config.appwriteUrl)
       .setProject(config.appwriteProjectId);
 
-    // this.account = new Account(this.client);
+    this.account = new Account(this.client);
   }
 
   async createAccount({ email, password, name }) {
@@ -35,7 +35,7 @@ export class AuthService {
 
   async login({ email, password }) {
     try {
-      return await this.account.createEmailSession(email, password);
+      return await this.account.createEmailPasswordSession(email, password);
     } catch (error) {
       console.log("login :: Auth.js ::", error);
     }
@@ -51,7 +51,6 @@ export class AuthService {
 
   async getCurrentUser() {
     try {
-      console.log("inside get current user");
       return await this.account.get();
     } catch (error) {
       console.log("getCurrentUser :: Auth.js ::", error);

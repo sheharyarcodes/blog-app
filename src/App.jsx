@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import authService from "./appwrite/auth";
 import { userLogin, userLogout } from "./features/auth/authSlice";
 import { Footer, Header } from "./components";
@@ -13,7 +13,7 @@ const App = () => {
     try {
       const userData = await authService.getCurrentUser();
       if (userData) {
-        dispatch(userLogin({ userData }));
+        dispatch(userLogin(userData));
       } else {
         dispatch(userLogout());
       }

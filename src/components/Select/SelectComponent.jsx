@@ -10,21 +10,22 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 
-const SelectComponent = forwardRef(function SelectComponent(
+const SelectComponent = React.forwardRef(function SelectComponent(
   { options, label, className, placeholder = "Select an option", ...props },
   ref
 ) {
   const id = useId();
+  // ref={ref}
 
   return (
     <div>
-      {label && <Label htmlFor={id}>{label}</Label>}
+      {label && <Label htmlFor={id}>{label}:</Label>}
 
-      <Select id={id} ref={ref} {...props}>
+      <Select id={id} {...props}>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent ref={ref}>
           <SelectGroup>
             {label && <SelectLabel>{label}</SelectLabel>}
             {options?.map((item) => (

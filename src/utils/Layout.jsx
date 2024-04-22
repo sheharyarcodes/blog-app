@@ -28,7 +28,7 @@ const Layout = () => {
         /> */}
         {/* <Route path="/search/:query" element={ search Page } /> */}
         <Route
-          path="/post/edit"
+          path="/edit-post/:slug"
           element={
             <ProtectedRoute authentication>
               <EditPost />

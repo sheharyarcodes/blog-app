@@ -6,22 +6,18 @@ const AllPosts = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    // appwriteService.getAllPosts().then((posts) => {
-    //   if (posts) {
-    //     setPosts(posts.documents);
-    //   }
-    // });
+    appwriteService.getAllPosts().then((posts) => {
+      if (posts) {
+        setPosts(posts.documents);
+      }
+    });
   }, []);
 
   return (
-    <Container>
-      <div>
-        {posts?.map((item) => {
-          <div key={item.$id}>
-            <PostCard {...item} />
-          </div>;
-        })}
-      </div>
+    <Container className="flex flex-wrap gap-4 py-10">
+      {posts?.map((item) => (
+        <PostCard key={item.$id} {...item} />
+      ))}
     </Container>
   );
 };
