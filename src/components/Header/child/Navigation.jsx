@@ -27,12 +27,6 @@ const Navigation = () => {
       show: true,
       id: uuid(),
     },
-    // {
-    //   name: "My Posts",
-    //   slug: `/posts/${userId}`,
-    //   show: authStatus,
-    //   id: uuid(),
-    // },
     {
       name: "Add Post",
       slug: "/post/add",
