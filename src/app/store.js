@@ -4,6 +4,6 @@ import authSlice from "../features/auth/authSlice";
 export const store = configureStore({
   reducer: {
     auth: authSlice,
-    // todo: add more slices here for post and search filtration.
+    // todo: add more slices here for post.
   },
 });

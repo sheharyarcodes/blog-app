@@ -16,7 +16,7 @@ const PostForm = ({ post }) => {
       defaultValues: {
         title: post?.title || "",
         content: post?.content || "",
-        slug: post?.$id || "",
+        slug: post?.$id || uuid(),
         category: post?.category || "",
       },
     });
@@ -31,6 +31,7 @@ const PostForm = ({ post }) => {
   ];
 
   const handlePost = async (data) => {
+    console.log(data);
     try {
       if (post) {
         const imageFile = data.image[0]
@@ -71,23 +72,23 @@ const PostForm = ({ post }) => {
     }
   };
 
-  const slugTransform = useCallback((value) => {
-    if (value && typeof value === "string") {
-      return value.trim().toLowerCase().replace(/ /g, "-");
-    } else {
-      return "";
-    }
-  }, []);
+  // const slugTransform = useCallback((value) => {
+  //   if (value && typeof value === "string") {
+  //     return value.trim().toLowerCase().replace(/ /g, "-");
+  //   } else {
+  //     return "";
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    const subscription = watch((value, { name }) => {
-      if (name === "title") {
-        setValue("slug", slugTransform(value.title, { shouldValidate: true }));
-      }
-    });
+  // useEffect(() => {
+  //   const subscription = watch((value, { name }) => {
+  //     if (name === "title") {
+  //       setValue("slug", slugTransform(value.title, { shouldValidate: true }));
+  //     }
+  //   });
 
-    return () => subscription.unsubscribe();
-  }, [watch, slugTransform, setValue]);
+  //   return () => subscription.unsubscribe();
+  // }, [watch, slugTransform, setValue]);
 
   return (
     <form
@@ -114,11 +115,11 @@ const PostForm = ({ post }) => {
         })}
       />
 
-      <InputComponent
+      {/* <InputComponent
         placeholder="Slug"
         label="Slug:"
         type="text"
-        className=""
+        className="hidden"
         {...register("slug", {
           required: true,
         })}
@@ -127,14 +128,14 @@ const PostForm = ({ post }) => {
             shouldValidate: true,
           });
         }}
-      />
+      /> */}
 
       <TextareaComponent
         label="Content:"
         {...register("content", { required: true })}
       />
 
-      <div className="flex justify-between">
+      <div className="flex flex-col sm:flex-row justify-between">
         <InputComponent
           placeholder="Choose an image"
           label="Featured Image:"

@@ -8,6 +8,7 @@ import {
   Login,
   PostDetails,
   SignUp,
+  SearchResults,
 } from "../pages";
 import { ProtectedRoute } from "@/components";
 
@@ -26,7 +27,7 @@ const Layout = () => {
             </ProtectedRoute>
           }
         /> */}
-        {/* <Route path="/search/:query" element={ search Page } /> */}
+        <Route path="/search/:searchQuery" element={<SearchResults />} />
         <Route
           path="/edit-post/:slug"
           element={
