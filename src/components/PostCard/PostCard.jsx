@@ -19,7 +19,9 @@ const PostCard = ({ $id, title, content, featuredImage, category }) => {
             alt={title}
           />
           <CardTitle className="mx-2">{title.slice(0, 20)}...</CardTitle>
-          <h2 className="mx-2">{category}</h2>
+          <h2 className="mx-2 font-semibold bg-gray-950 text-white w-fit px-2 py-1 rounded">
+            {category}
+          </h2>
           <CardDescription className="mx-2">
             {content.slice(0, 42)}...
           </CardDescription>

@@ -4,15 +4,29 @@ import {
   NavigationMenuList,
   NavigationMenu,
 } from "@/components/ui/navigation-menu";
-import { NavLink } from "react-router-dom";
-import ButtonsContainer from "./ButtonsContainer";
-import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
-import { useSelector } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+import {
+  SheetTrigger,
+  SheetContent,
+  Sheet,
+  SheetClose,
+} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { v4 as uuid } from "uuid";
+import { useDispatch, useSelector } from "react-redux";
+import authService from "@/appwrite/auth";
+import { userLogout } from "@/features/auth/authSlice";
 
 const Navigation = () => {
   const authStatus = useSelector((state) => state.auth.status);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const logoutHandler = () => {
+    authService.logout().then(() => {
+      dispatch(userLogout());
+    });
+  };
 
   const navItems = [
     {
@@ -60,7 +74,28 @@ const Navigation = () => {
             </NavigationMenuLink>
           ))}
         </NavigationMenuList>
-        <ButtonsContainer />
+        {!authStatus ? (
+          <div className="flex items-center gap-2">
+            <Button
+              className="w-1/2"
+              onClick={() => navigate("/login")}
+              variant="outline"
+            >
+              Log in
+            </Button>
+            <Button className="w-1/2" onClick={() => navigate("/signup")}>
+              Sign Up
+            </Button>
+          </div>
+        ) : (
+          <Button
+            className="w-full"
+            onClick={logoutHandler}
+            variant="destructive"
+          >
+            Logout
+          </Button>
+        )}
       </NavigationMenu>
 
       {/* mobile navigation */}
@@ -74,9 +109,9 @@ const Navigation = () => {
         <SheetContent className="flex flex-col justify-between" side="right">
           <div className="grid gap-2 py-6">
             {navItems.map((item) => (
-              <NavLink
-                key={item.id}
-                className={`
+              <SheetClose key={item.id} asChild>
+                <NavLink
+                  className={`
                 rounded px-2 py-1 text-sm font-medium transition-colors whitespace-nowrap
                 ${
                   item.show
@@ -86,13 +121,43 @@ const Navigation = () => {
                 ${({ isActive }) =>
                   isActive ? "bg-gray-100 text-gray-900" : "bg-transparent"}
               `}
-                to={item.show && item.slug}
-              >
-                {item.name}
-              </NavLink>
+                  to={item.show && item.slug}
+                >
+                  {item.name}
+                </NavLink>
+              </SheetClose>
             ))}
           </div>
-          <ButtonsContainer />
+          <div>
+            {!authStatus ? (
+              <div className="flex items-center gap-2">
+                <SheetClose asChild>
+                  <Button
+                    className="w-1/2"
+                    onClick={() => navigate("/login")}
+                    variant="outline"
+                  >
+                    Log in
+                  </Button>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Button className="w-1/2" onClick={() => navigate("/signup")}>
+                    Sign Up
+                  </Button>
+                </SheetClose>
+              </div>
+            ) : (
+              <SheetClose asChild>
+                <Button
+                  className="w-full"
+                  onClick={logoutHandler}
+                  variant="destructive"
+                >
+                  Logout
+                </Button>
+              </SheetClose>
+            )}
+          </div>
         </SheetContent>
       </Sheet>
     </div>

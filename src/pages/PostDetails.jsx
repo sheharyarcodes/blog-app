@@ -52,7 +52,7 @@ const PostDetails = () => {
         )}
       </div>
 
-      <h2 className="bg-gray-950 text-white w-fit px-2 py-1 rounded">
+      <h2 className="bg-gray-950 text-white w-fit font-semibold px-2 py-1 rounded">
         {post.category}
       </h2>
 
