@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import appwriteService from "../appwrite/appwriteConfig";
-import { Container } from "../components";
+import { Container, Spinner } from "../components";
 import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 
@@ -52,7 +52,7 @@ const PostDetails = () => {
         )}
       </div>
 
-      <h2 className="bg-gray-950 text-white w-fit font-semibold px-2 py-1 rounded">
+      <h2 className="bg-gray-200 w-fit rounded-full px-3 py-1 text-md font-semibold text-gray-700 capitalize ">
         {post.category}
       </h2>
 
@@ -60,7 +60,9 @@ const PostDetails = () => {
 
       <p className="">{post.content}</p>
     </Container>
-  ) : null;
+  ) : (
+    <Spinner></Spinner>
+  );
 };
 
 export default PostDetails;

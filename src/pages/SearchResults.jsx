@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import appwriteService from "@/appwrite/appwriteConfig";
-import { Container, PostCard } from "@/components";
+import { Container, PostCard, Spinner } from "@/components";
 import { useSelector } from "react-redux";
 
 const SearchResults = () => {
   const [results, setResults] = useState([]);
   const { searchQuery } = useParams();
   const authStatus = useSelector((state) => state.auth.status);
+
+  useEffect(() => {
+    if (!authStatus) setResults([]);
+  }, [authStatus]);
 
   useEffect(() => {
     appwriteService.getAllPosts().then((posts) => {
@@ -27,9 +31,12 @@ const SearchResults = () => {
       {!authStatus && (
         <h1 className="mx-auto font-bold text-4xl">Login to see posts.</h1>
       )}
-      {results?.map((item) => (
-        <PostCard key={item.$id} {...item} />
-      ))}
+
+      {results.length > 0 ? (
+        results?.map((item) => <PostCard key={item.$id} {...item} />)
+      ) : (
+        <Spinner></Spinner>
+      )}
     </Container>
   );
 };

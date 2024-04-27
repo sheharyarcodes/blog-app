@@ -18,10 +18,10 @@ const PostCard = ({ $id, title, content, featuredImage, category }) => {
             src={appwriteService.getFilePreview(featuredImage)}
             alt={title}
           />
-          <CardTitle className="mx-2">{title.slice(0, 20)}...</CardTitle>
-          <h2 className="mx-2 font-semibold bg-gray-950 text-white w-fit px-2 py-1 rounded">
+          <h2 className="bg-gray-200 w-fit rounded-full px-2 py-1 text-xs font-semibold text-gray-700 mx-2 capitalize ">
             {category}
           </h2>
+          <CardTitle className="mx-2">{title.slice(0, 20)}...</CardTitle>
           <CardDescription className="mx-2">
             {content.slice(0, 42)}...
           </CardDescription>

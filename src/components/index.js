@@ -8,6 +8,7 @@ import PostCard from "./PostCard/PostCard";
 import PostForm from "./PostForm/PostForm";
 import SignUp from "./authComponents/SignUp";
 import Login from "./authComponents/Login";
+import Spinner from "./spinner/Spinner";
 
 export {
   Header,
@@ -20,4 +21,5 @@ export {
   PostForm,
   SignUp,
   Login,
+  Spinner,
 };

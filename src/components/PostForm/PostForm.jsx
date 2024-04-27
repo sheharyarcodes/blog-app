@@ -31,7 +31,6 @@ const PostForm = ({ post }) => {
   ];
 
   const handlePost = async (data) => {
-    console.log(data);
     try {
       if (post) {
         const imageFile = data.image[0]

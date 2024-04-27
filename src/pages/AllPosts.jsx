@@ -1,5 +1,5 @@
 import appwriteService from "@/appwrite/appwriteConfig";
-import { Container, PostCard } from "@/components";
+import { Container, PostCard, Spinner } from "@/components";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -15,14 +15,21 @@ const AllPosts = () => {
     });
   }, []);
 
+  useEffect(() => {
+    if (!authStatus) setPosts([]);
+  }, [authStatus]);
+
   return (
-    <Container className="flex flex-wrap gap-4 py-10">
+    <Container className="flex justify-center flex-wrap gap-4 py-10">
       {!authStatus && (
         <h1 className="mx-auto font-bold text-4xl">Login to see posts.</h1>
       )}
-      {posts?.map((item) => (
-        <PostCard key={item.$id} {...item} />
-      ))}
+
+      {posts.length > 0 ? (
+        posts?.map((item) => <PostCard key={item.$id} {...item} />)
+      ) : (
+        <Spinner></Spinner>
+      )}
     </Container>
   );
 };

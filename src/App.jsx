@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import authService from "./appwrite/auth";
 import { userLogin, userLogout } from "./features/auth/authSlice";
-import { Footer, Header } from "./components";
+import { Footer, Header, Spinner } from "./components";
 import Layout from "./utils/Layout";
 
 const App = () => {
@@ -39,8 +39,8 @@ const App = () => {
       <Footer />
     </div>
   ) : (
-    <div className="flex min-h-screen items-center justify-center">
-      <p className="text-3xl font-bold">loading...</p>
+    <div className="h-screen flex justify-center items-center">
+      <Spinner></Spinner>
     </div>
   );
 };
